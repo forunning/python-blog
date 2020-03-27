@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}详情-{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/detail.css') }}">
+    <script src="{{ url_for('static',filename='js/rili.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-3 aside">
+                <div class="show_me">
+                    <div class="author-avatar">
+                        <img src="{{ url_for('static',filename='images/logo.jpeg') }}" alt="" class="avatar">
+                    </div>
+                    <div class="author-description">
+                        <h3 class="author-title">Running</h3>
+                        <p class="author-bio">Believe in yourself.</p>
+                    </div>
+                </div>
+                <div class="Calendar">
+                    <div id="idCalendarPre"><<</div>
+                    <div id="idCalendarNext">>></div>
+                    <span id="idCalendarYear">2008</span>年 <span id="idCalendarMonth">8</span>月
+                    <table cellspacing="0">
+                        <thead>
+                        <tr>
+                            <td>日</td>
+                            <td>一</td>
+                            <td>二</td>
+                            <td>三</td>
+                            <td>四</td>
+                            <td>五</td>
+                            <td>六</td>
+                        </tr>
+                        </thead>
+                        <tbody id="idCalendar">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="new_art">
+                    <p>最新文章</p>
+                    <hr>
+                    <ul style="list-style: none;padding-left: 0px;">
+                        {% for question in question_show %}
+                            <li>
+                                <p>
+                                    <a href="{{ url_for('detail',question_id=question.id) }}">《{{ question.title }}》</a>
+                                </p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="new_ping">
+                    <p>最新评论</p>
+                    <hr>
+                    <ul style="list-style: none;padding-left: 0px;">
+                        {% for answer in answers %}
+                            <li>
+                                <p>
+                                    <a href="{{ url_for('detail',question_id=answer.question.id) }}">{{ answer.author.username }}发表在《{{ answer.question.title }}》</a>
+                                </p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        <div class="col-md-9" main>
+            <h3 class="page-title">{{ question.title }}</h3>
+            <p class="question-info">
+                <span>作者：{{ question.author.username }}</span>
+                <span>时间：{{ question.create_time }}</span>
+            </p>
+            <hr>
+            <pre class="question-contents">{{ question.content }}</pre>
+            <hr>
+            <form action="{{ url_for('add_answer') }}" method="post">
+                <div class="form-group">
+                    <input name="answer_content" type="text" class="form-control" placeholder="请填写评论">
+                    <input type="hidden" name="question_id" value="{{ question.id }}">
+                </div>
+                <div class="form-group" style="text-align: right;">
+                    <button class="btn btn-primary">立即评论</button>
+
+                </div>
+            </form>
+            <ul class="answer-list">
+                {% for answer in question.answers %}
+                    <li>
+                        <form action="{{ url_for('del_answer') }}" method="post">
+                            <div class="form-group">
+                                <div class="user-info">
+                                    <img src="{{ url_for('static',filename='images/logo.jpeg') }}" alt="" class="avatar">
+                                    <span class="username">{{ answer.author.username }}</span>
+                                    <span class="create-time">{{ answer.create_time }}</span>
+                                    <input type="hidden" name="answer_id" value="{{ answer.id }}">
+                                    <input type="hidden" name="question_id" value="{{ question.id }}">
+                                </div>
+                                <p class="answer-content">{{ answer.content }}</p>
+                            </div>
+                            {% if user and user.username=='Running'%}
+                                    <div class="form-group" style="text-align: right;">
+                                        <button class="btn btn-primary">删除评论</button>
+                                    </div>
+                            {% endif %}
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+
+{% endblock %}

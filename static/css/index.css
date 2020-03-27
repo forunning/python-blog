@@ -1,0 +1,121 @@
+
+ul.question-list-group{
+    list-style: none;
+    padding-left: 0;
+    width: 730px;
+    margin: 0 auto;
+}
+
+ul.question-list-group li{
+    border-bottom: 1px solid #eee;
+    overflow: hidden;
+    padding: 15px 0;
+}
+
+.avatar-group{
+    width: 38px;
+    height: 100%;
+    float: left;
+}
+
+.avatar-group .avatar{
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+}
+
+.question-group{
+    float: left;
+    width: 660px;
+    margin-left: 10px;
+}
+
+.question-title a{
+    color: #259;
+    font-weight: 900;
+}
+
+.question-info{
+    text-align: right;
+}
+
+.question-info .question-author{
+    margin-right:20px;
+}
+.author-avatar{
+    float: left;
+    padding-right: 1.6em;
+}
+.author-avatar img{
+    border-radius: 50%;
+}
+.author-description{
+    margin-top: 0;
+    margin-bottom: 0.1em;
+    font-size: 14px;
+    font-weight: 700;
+}
+h3.author-title {
+    margin-top: 0px;
+}
+.main{
+    padding-top: 15px;
+    border-left: 1px solid #10101047;
+}
+p.question-content {
+    height: 120px;
+    overflow: hidden;
+}
+.Calendar {
+	font-family:Verdana;
+	font-size:9pt;
+	text-align:center;
+	padding:10px;
+	line-height:1.5em;
+}
+.show_me{
+    padding-bottom: 20px;
+}
+.col-md-3.aside {
+    padding-top: 30px;
+    border-right: 1px solid #10101047;
+}
+
+.Calendar a{
+	color:#0066CC;
+}
+.Calendar table{
+	width:100%;
+	border:0;
+}
+.Calendar table thead{color:#acacac;}
+.Calendar table td {
+	font-size: 11px;
+	padding:1px;
+}
+#idCalendarPre{
+	cursor:pointer;
+	float:left;
+	padding-right:5px;
+}
+#idCalendarNext{
+	cursor:pointer;
+	float:right;
+	padding-right:5px;
+}
+#idCalendar td.onToday {
+	font-weight:bold;
+	color:#C60;
+}
+#idCalendar td.onSelect {
+	font-weight:bold;
+}
+.pagination{
+    float: right;
+}
+.new_art,.new_ping{
+    margin-top: 20px;
+}
+.new_art hr,.new_ping hr{
+    margin-top: 0px;
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}-那个男人的博客</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+    {% block head %}{% endblock %}
+</head>
+<body style="background: #d8e2eb url(https://chaoo.oschina.io/img/bg.jpg) no-repeat top center;">
+    <nav class="navbar navbar-default" style="background-color: rgba(255, 255, 255, 0);margin-bottom: 0px">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active">
+                <a href="/">首页<span class="sr-only">(current)</span></a>
+            </li>
+          {% if user and user.username=='Running' %}
+            <li>
+                <a href="{{ url_for('question',id=-1) }}">发布博文</a>
+            </li>
+          {% endif %}
+          </ul>
+          <form class="navbar-form navbar-left" action="{{ url_for('search') }}" method="get">
+            <div class="form-group">
+              <input name="q" type="text" class="form-control" placeholder="请输入关键字">
+            </div>
+            <button type="submit" class="btn btn-default">查找</button>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+              {% if user %}
+                  <li><a href="#">{{ user.username }}</a></li>
+                  <li><a href="{{ url_for('logout') }}">注销</a></li>
+              {% else %}
+                  <li><a href="{{ url_for('login') }}">登录</a></li>
+                  <li><a href="{{ url_for('regist') }}">注册</a></li>
+              {% endif %}
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container">
+        {% block main %}{% endblock %}
+    </div>
+	<script language="JavaScript">
+		var cale = new Calendar("idCalendar", {
+			SelectDay: new Date().setDate(10),
+			onSelectDay: function(o){ o.className = "onSelect"; },
+			onToday: function(o){ o.className = "onToday"; },
+			onFinish: function(){
+				$("idCalendarYear").innerHTML = this.Year; $("idCalendarMonth").innerHTML = this.Month;
+				var flag = [10,15,20];
+				for(var i = 0, len = flag.length; i < len; i++){
+					this.Days[flag[i]].innerHTML = "<a href='javascript:void(0);' onclick=\"alert('您选择的日期是："+this.Year+"/"+this.Month+"/"+flag[i]+"');return false;\">" + flag[i] + "</a>";
+				}
+			}
+		});
+		$("idCalendarPre").onclick = function(){ cale.PreMonth(); }
+		$("idCalendarNext").onclick = function(){ cale.NextMonth(); }
+	</script>
+</body>
+</html>

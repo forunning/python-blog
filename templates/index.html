@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}首页{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
+    <script src="{{ url_for('static',filename='js/rili.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+            <div class="col-md-3 aside">
+                <div class="show_me">
+                    <div class="author-avatar">
+                        <img src="{{ url_for('static',filename='images/logo.jpeg') }}" alt="" class="avatar">
+                    </div>
+                    <div class="author-description">
+                        <h3 class="author-title">Running</h3>
+                        <p class="author-bio">Believe in yourself.</p>
+                    </div>
+                </div>
+                <div class="Calendar">
+                    <div id="idCalendarPre"><<</div>
+                    <div id="idCalendarNext">>></div>
+                    <span id="idCalendarYear">2008</span>年 <span id="idCalendarMonth">8</span>月
+                    <table cellspacing="0">
+                        <thead>
+                        <tr>
+                            <td>日</td>
+                            <td>一</td>
+                            <td>二</td>
+                            <td>三</td>
+                            <td>四</td>
+                            <td>五</td>
+                            <td>六</td>
+                        </tr>
+                        </thead>
+                        <tbody id="idCalendar">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="new_art">
+                    <p>最新文章</p>
+                    <hr>
+                    <ul style="list-style: none;padding-left: 0px;">
+                        {% for question in question_show %}
+                            <li>
+                                <p>
+                                    <a href="{{ url_for('detail',question_id=question.id) }}">《{{ question.title }}》</a>
+                                </p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="new_ping">
+                    <p>最新评论</p>
+                    <hr>
+                    <ul style="list-style: none;padding-left: 0px;">
+                        {% for answer in answers %}
+                            <li>
+                                <p>
+                                    <a href="{{ url_for('detail',question_id=answer.question.id) }}">{{ answer.author.username }}发表在《{{ answer.question.title }}》</a>
+                                </p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+            <div class="col-md-9 main">
+                <ul class="question-list-group">
+                    {% for question in questions %}
+                        <li>
+                            <div class="avatar-group">
+                                <img src="{{ url_for('static',filename='images/logo.jpeg') }}" alt="" class="avatar">
+                            </div>
+                            <div class="question-group">
+                                <p class="question-title"><a href="{{ url_for('detail',question_id=question.id) }}">{{ question.title }}</a>
+                                    {% if user and user.username=='Running' %}
+                                        <a class="btn" href="{{ url_for('question',id=question.id) }}">编辑</a>
+                                        <a class="btn" href="{{ url_for('question_del',id=question.id) }}">删除</a>
+                                    {% endif %}
+                                </p>
+                                <p class="question-content">{{ question.content }}</p>
+                                <div class="question-info">
+                                    <span class="question-author">{{ question.author.username }}</span>
+                                    <span class="question-time">{{ question.create_time }}</span>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    <ul class="pagination">
+                        <li><a href="{{ url_for('index',page=pagination.prev_num) }}">&laquo;</a></li>
+                        {% for s in range(1,(pagination.pages+1)) %}
+                            {% if s==pagination.page %}
+                                <li class="active"><a href="{{ url_for('index',page=s) }}">{{ s }}</a></li>
+                            {% else %}
+                                <li><a href="{{ url_for('index',page=s) }}">{{ s }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        <li><a href="{{ url_for('index',page=pagination.next_num) }}">&raquo;</a></li>
+                    </ul>
+                </ul>
+            </div>
+    </div>
+{% endblock %}
